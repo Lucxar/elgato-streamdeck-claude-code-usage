@@ -9,7 +9,7 @@
       "UUID": "com.wegastudios.claude-code-usage.tracker",
       "Icon": "imgs/actions/tracker/icon",
       "PropertyInspectorPath": "ui/inspector.html",
-      "Tooltip": "Show Claude Code subscription usage on a Stream Deck + dial. Rotate to switch view (5h, weekly, Sonnet, Opus). Press to refresh.",
+      "Tooltip": "Show Claude Code subscription usage on a Stream Deck + dial. Rotate to switch view (5h, weekly, Design, Sonnet). Press to refresh.",
       "Controllers": [
         "Encoder"
       ],
@@ -32,7 +32,7 @@
   "Category": "Claude Code Usage",
   "CategoryIcon": "imgs/plugin/category-icon",
   "CodePath": "bin/plugin.js",
-  "Description": "Displays your Claude Code subscription usage limits (5-hour, weekly, Sonnet, Opus) on a Stream Deck + rotary encoder. Reads the local Claude Code session token — Claude Code must be installed and signed in. Not affiliated with Anthropic.",
+  "Description": "Displays your Claude Code subscription usage limits (5-hour, weekly, Design, Sonnet) on a Stream Deck + rotary encoder. Reads the local Claude Code session token — Claude Code must be installed and signed in. Not affiliated with Anthropic.",
   "Icon": "imgs/plugin/marketplace",
   "SDKVersion": 2,
   "Software": {

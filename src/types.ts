@@ -65,11 +65,11 @@ export type StatusUpdate = {
 
 
 /** Identifiers for the four fixed views the dial cycles through. */
-export type ViewId = "five_hour" | "seven_day" | "sonnet" | "opus";
+export type ViewId = "five_hour" | "seven_day" | "design" | "sonnet";
 
 export const VIEW_ORDER: readonly ViewId[] = [
   "five_hour",
   "seven_day",
+  "design",
   "sonnet",
-  "opus",
 ] as const;

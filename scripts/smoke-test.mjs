@@ -23,12 +23,12 @@ console.log("[api] status:", res.status);
 const body = await res.json();
 
 // Mirror views.ts logic exactly.
-const VIEW_ORDER = ["five_hour", "seven_day", "sonnet", "opus"];
+const VIEW_ORDER = ["five_hour", "seven_day", "design", "sonnet"];
 const VIEW_META = {
   five_hour: { title: "5H Limit", pick: (r) => r.five_hour },
   seven_day: { title: "Weekly", pick: (r) => r.seven_day },
+  design:    { title: "Design 7d", pick: (r) => r.seven_day_omelette },
   sonnet:    { title: "Sonnet 7d", pick: (r) => r.seven_day_sonnet },
-  opus:      { title: "Opus 7d", pick: (r) => r.seven_day_opus },
 };
 function fmtSuffix(iso, id) {
   const t = Date.parse(iso);

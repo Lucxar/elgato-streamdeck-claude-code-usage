@@ -40,15 +40,18 @@ const VIEW_META: Record<ViewId, ViewMeta> = {
     title: "Weekly",
     pick: (r) => r.seven_day,
   },
+  // The API exposes Anthropic's "Design" bucket under the internal codename
+  // `seven_day_omelette`. We surface it as "Design 7d" — what users actually
+  // see in Claude Code's quota messaging.
+  design: {
+    id: "design",
+    title: "Design 7d",
+    pick: (r) => r.seven_day_omelette,
+  },
   sonnet: {
     id: "sonnet",
     title: "Sonnet 7d",
     pick: (r) => r.seven_day_sonnet,
-  },
-  opus: {
-    id: "opus",
-    title: "Opus 7d",
-    pick: (r) => r.seven_day_opus,
   },
 };
 
