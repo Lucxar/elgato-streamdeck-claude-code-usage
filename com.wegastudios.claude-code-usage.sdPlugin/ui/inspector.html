@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Claude Code Usage — Settings</title>
+<style>
+  :root {
+    color-scheme: dark light;
+    --fg: #eaeaea;
+    --fg-muted: #a0a0a0;
+    --bg: transparent;
+    --accent: #d97757;
+    --ok: #4ade80;
+    --warn: #fbbf24;
+    --err: #f87171;
+    --border: #3a3a3a;
+    --input-bg: #1f1f23;
+  }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 13px;
+    color: var(--fg);
+    background: var(--bg);
+    margin: 0;
+    padding: 12px 16px;
+  }
+  h2 {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 16px 0 6px 0;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  h2:first-child { margin-top: 0; }
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--input-bg);
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--fg-muted);
+    flex-shrink: 0;
+  }
+  .dot.ok { background: var(--ok); }
+  .dot.warn { background: var(--warn); }
+  .dot.err { background: var(--err); }
+  .dot.loading { background: var(--accent); animation: pulse 1.4s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+  .status-msg { flex: 1; line-height: 1.3; }
+  .status-meta {
+    margin-top: 4px;
+    color: var(--fg-muted);
+    font-size: 11px;
+    word-break: break-all;
+  }
+  input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--input-bg);
+    color: var(--fg);
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 12px;
+  }
+  input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .hint {
+    margin-top: 4px;
+    color: var(--fg-muted);
+    font-size: 11px;
+  }
+  .row { display: flex; gap: 8px; margin-top: 8px; }
+  button {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--input-bg);
+    color: var(--fg);
+    cursor: pointer;
+    font-size: 12px;
+  }
+  button:hover { border-color: var(--accent); color: var(--accent); }
+  button:active { background: #2a2a2e; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .footer {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--fg-muted);
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<h2>Status</h2>
+<div class="status">
+  <div id="dot" class="dot loading"></div>
+  <div>
+    <div id="status-msg" class="status-msg">Connecting…</div>
+    <div id="status-meta" class="status-meta"></div>
+  </div>
+</div>
+<div class="row">
+  <button id="refresh-btn" type="button">Refresh now</button>
+</div>
+
+<h2>Credentials path (advanced)</h2>
+<input id="credentials-path" type="text" placeholder="Default: ~/.claude/.credentials.json" autocomplete="off" spellcheck="false">
+<div class="hint">
+  Leave empty to use the default location. Override only if Claude Code stores its credentials elsewhere
+  (e.g. a portable install, WSL-mounted home directory, custom HOME env var).
+</div>
+
+<div class="footer">
+  Reads the local Claude Code session token to display your subscription usage.
+  Requires <a href="#" id="claude-code-link">Claude Code</a> to be installed and signed in.
+  <br><a href="#" id="help-link">Plugin help &amp; troubleshooting</a> · Not affiliated with Anthropic.
+</div>
+
+<script src="inspector.js"></script>
+</body>
+</html>

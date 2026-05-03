@@ -1,0 +1,31 @@
+{
+  "id": "claude-usage",
+  "items": [
+    {
+      "key": "title",
+      "type": "text",
+      "rect": [4, 4, 192, 18],
+      "alignment": "center",
+      "color": "#BBBBBB",
+      "font": { "size": 13, "weight": 500 }
+    },
+    {
+      "key": "value",
+      "type": "text",
+      "rect": [4, 26, 192, 44],
+      "alignment": "center",
+      "color": "#FFFFFF",
+      "font": { "size": 36, "weight": 700 }
+    },
+    {
+      "key": "indicator",
+      "type": "bar",
+      "rect": [10, 80, 180, 12],
+      "value": 0,
+      "subtype": 4,
+      "border_w": 0,
+      "bar_bg_c": "#2a2a2a",
+      "bar_fill_c": "#D97757"
+    }
+  ]
+}

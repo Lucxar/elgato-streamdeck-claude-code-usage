@@ -1,0 +1,8 @@
+node_modules/
+com.wegastudios.claude-code-usage.sdPlugin/bin/
+*.streamDeckPlugin
+*.log
+.DS_Store
+_inspect.ps1
+_probe.ps1
+

@@ -1,0 +1,42 @@
+{
+  "name": "claude-code-usage-streamdeck",
+  "version": "1.0.0",
+  "description": "Stream Deck + plugin that displays your Claude Code subscription usage limits on a rotary encoder.",
+  "main": "com.wegastudios.claude-code-usage.sdPlugin/bin/plugin.js",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "author": "Wega Studios",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lucxar/elgato-streamdeck-claude-code-usage"
+  },
+  "homepage": "https://github.com/Lucxar/elgato-streamdeck-claude-code-usage#readme",
+  "bugs": {
+    "url": "https://github.com/Lucxar/elgato-streamdeck-claude-code-usage/issues"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w --watch.onEnd=\"streamdeck restart com.wegastudios.claude-code-usage\"",
+    "package": "npm run build && streamdeck pack com.wegastudios.claude-code-usage.sdPlugin",
+    "validate": "streamdeck validate com.wegastudios.claude-code-usage.sdPlugin",
+    "smoke": "node scripts/smoke-test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@elgato/streamdeck": "^2.1.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.0",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.0",
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^20.16.0",
+    "rollup": "^4.24.0",
+    "tslib": "^2.7.0",
+    "typescript": "^5.6.0"
+  }
+}
