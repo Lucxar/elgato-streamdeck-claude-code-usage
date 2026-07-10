@@ -40,20 +40,30 @@ const VIEW_META: Record<ViewId, ViewMeta> = {
     title: "Weekly",
     pick: (r) => r.seven_day,
   },
-  // The API exposes Anthropic's "Design" bucket under the internal codename
-  // `seven_day_omelette`. We surface it as "Design 7d" — what users actually
-  // see in Claude Code's quota messaging.
-  design: {
-    id: "design",
-    title: "Design 7d",
-    pick: (r) => r.seven_day_omelette,
-  },
-  sonnet: {
-    id: "sonnet",
-    title: "Sonnet 7d",
-    pick: (r) => r.seven_day_sonnet,
+  fable: {
+    id: "fable",
+    title: "Fable 7d",
+    pick: pickFableBucket,
   },
 };
+
+/**
+ * The Fable weekly cap has no flat field of its own — since mid-2026 it lives
+ * inside the `limits` array as a model-scoped entry (scope.model.display_name
+ * is the only stable handle; scope.model.id is null). Synthesize a UsageBucket
+ * from that entry so the rest of the view pipeline stays bucket-shaped.
+ */
+function pickFableBucket(r: UsageResponse): UsageBucket | null {
+  const limits = Array.isArray(r.limits) ? r.limits : [];
+  for (const limit of limits) {
+    const name = limit?.scope?.model?.display_name;
+    if (typeof name !== "string" || !name.toLowerCase().includes("fable")) continue;
+    if (typeof limit.percent !== "number" || !Number.isFinite(limit.percent)) continue;
+    return { utilization: limit.percent, resets_at: limit.resets_at ?? null };
+  }
+  // Fallback: a flat field, should Anthropic ever surface one.
+  return r.seven_day_fable ?? null;
+}
 
 /** Wrap-around index arithmetic for dial rotation. */
 export function rotateIndex(current: number, ticks: number): number {
@@ -131,9 +141,10 @@ function clampPct(n: number): number {
 
 /**
  * Renders the reset timestamp as a short suffix ("5h12m", "2d", "now").
- * Empty string if the date is unparseable.
+ * Empty string if the date is missing or unparseable.
  */
-function formatResetSuffix(iso: string, id: ViewId): string {
+function formatResetSuffix(iso: string | null, id: ViewId): string {
+  if (iso === null) return "";
   const t = Date.parse(iso);
   if (!Number.isFinite(t)) return "";
   const ms = t - Date.now();

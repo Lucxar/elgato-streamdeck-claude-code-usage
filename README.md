@@ -9,7 +9,7 @@ subscription usage limits on a Stream Deck + rotary encoder.
 
 ## Features
 
-- **Live usage on a dial** — 5-hour rolling limit, weekly limit, Sonnet 7-day, Opus 7-day
+- **Live usage on a dial** — 5-hour rolling limit, weekly limit, Fable 7-day
 - **Rotate to switch view** with wrap-around
 - **Press or tap to refresh** immediately (rate-limit aware)
 - **Auto-refresh** every 90 seconds in the background
@@ -47,7 +47,7 @@ Then drag the action onto a dial in the Stream Deck app.
 
 | Gesture        | Effect                              |
 |----------------|-------------------------------------|
-| Rotate dial    | Switch view (5h ↔ Weekly ↔ Sonnet ↔ Opus) |
+| Rotate dial    | Switch view (5h ↔ Weekly ↔ Fable) |
 | Press dial     | Force refresh                       |
 | Touch screen   | Force refresh                       |
 

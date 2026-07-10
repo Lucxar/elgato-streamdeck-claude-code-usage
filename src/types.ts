@@ -5,7 +5,31 @@
  */
 export type UsageBucket = {
   utilization: number;
-  resets_at: string;
+  /** ISO 8601, or null — observed even on present windows (e.g. 0% util). */
+  resets_at: string | null;
+};
+
+/**
+ * One entry of the `limits` array Anthropic added to the response in mid-2026.
+ * Account-wide windows are restated here (`kind: "session"` mirrors
+ * `five_hour`, `kind: "weekly_all"` mirrors `seven_day`); model-scoped limits
+ * (e.g. Fable's weekly cap) exist ONLY here — there is no flat
+ * `seven_day_fable` field. All fields defensive-optional: the endpoint is
+ * undocumented and shifts without notice.
+ */
+export type UsageLimit = {
+  kind?: string | null;
+  group?: string | null;
+  /** Utilization 0–100. Same unit as UsageBucket.utilization. */
+  percent?: number | null;
+  severity?: string | null;
+  resets_at?: string | null;
+  /** null for account-wide limits; model-scoped entries carry the model name. */
+  scope?: {
+    model?: { id?: string | null; display_name?: string | null } | null;
+    surface?: unknown;
+  } | null;
+  is_active?: boolean;
 };
 
 /**
@@ -24,6 +48,14 @@ export type UsageResponse = {
   tangelo: UsageBucket | null;
   iguana_necktie: UsageBucket | null;
   omelette_promotional: UsageBucket | null;
+  /** Model-scoped limits live here since mid-2026 (see UsageLimit). */
+  limits?: UsageLimit[] | null;
+  /**
+   * Speculative flat field for the Fable weekly cap. Not observed in the wild
+   * (2026-07: Fable exists only inside `limits`), but some third-party clients
+   * probe it — kept as a cheap fallback should Anthropic flatten it later.
+   */
+  seven_day_fable?: UsageBucket | null;
   extra_usage: {
     is_enabled: boolean;
     monthly_limit: number | null;
@@ -64,12 +96,11 @@ export type StatusUpdate = {
 };
 
 
-/** Identifiers for the four fixed views the dial cycles through. */
-export type ViewId = "five_hour" | "seven_day" | "design" | "sonnet";
+/** Identifiers for the three fixed views the dial cycles through. */
+export type ViewId = "five_hour" | "seven_day" | "fable";
 
 export const VIEW_ORDER: readonly ViewId[] = [
   "five_hour",
   "seven_day",
-  "design",
-  "sonnet",
+  "fable",
 ] as const;

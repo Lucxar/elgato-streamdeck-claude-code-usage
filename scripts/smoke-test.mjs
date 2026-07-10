@@ -23,12 +23,21 @@ console.log("[api] status:", res.status);
 const body = await res.json();
 
 // Mirror views.ts logic exactly.
-const VIEW_ORDER = ["five_hour", "seven_day", "design", "sonnet"];
+function pickFableBucket(r) {
+  const limits = Array.isArray(r.limits) ? r.limits : [];
+  for (const limit of limits) {
+    const name = limit?.scope?.model?.display_name;
+    if (typeof name !== "string" || !name.toLowerCase().includes("fable")) continue;
+    if (typeof limit.percent !== "number" || !Number.isFinite(limit.percent)) continue;
+    return { utilization: limit.percent, resets_at: limit.resets_at ?? null };
+  }
+  return r.seven_day_fable ?? null;
+}
+const VIEW_ORDER = ["five_hour", "seven_day", "fable"];
 const VIEW_META = {
   five_hour: { title: "5H Limit", pick: (r) => r.five_hour },
   seven_day: { title: "Weekly", pick: (r) => r.seven_day },
-  design:    { title: "Design 7d", pick: (r) => r.seven_day_omelette },
-  sonnet:    { title: "Sonnet 7d", pick: (r) => r.seven_day_sonnet },
+  fable:     { title: "Fable 7d", pick: pickFableBucket },
 };
 function fmtSuffix(iso, id) {
   const t = Date.parse(iso);
